@@ -1,6 +1,4 @@
 import re
-import text_extractor
-import pdf_type
 
 def extract_document_type(text):
     # Define patterns for different document types):

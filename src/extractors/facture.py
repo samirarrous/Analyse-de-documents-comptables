@@ -6,7 +6,6 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import text_extractor
-import pdf_type
 
 def extract_facture_number(text):
     # On autorise des espaces partout, même autour du slash
