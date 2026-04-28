@@ -24,4 +24,3 @@ def define_type(file_path):
     else:
         return PDFType.SCAN            
         
-print("PDF type:", define_type("../sample_pdfs/09_liasse_fiscale_technovation_multi.pdf").value)
