@@ -29,3 +29,15 @@ def extract_date(text):
     if match:
         return match.group()
     return "unknown"
+
+def extract_company_name(text):
+    pattern = r"(?:DE\s*:\s*)?([A-ZÀ-ÿ0-9 '&-]+)\s+(?:EURL|SARL|SAS|SA|SCI|EI)"
+    # On reste en IGNORECASE pour attraper "sas" ou "SAS"
+    match = re.search(pattern, text, re.IGNORECASE)
+    
+    if match:
+        return match.group(1).strip()  
+    
+    return "unknown"
+print("text :", text_extractor.extract_text("../../sample_pdfs/09_liasse_fiscale_technovation_multi.pdf"))
+print("company name :", extract_company_name(text_extractor.extract_text("../../sample_pdfs/09_liasse_fiscale_technovation_multi.pdf")))

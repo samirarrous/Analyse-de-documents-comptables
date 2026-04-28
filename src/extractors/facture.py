@@ -26,3 +26,4 @@ def extract_limit_date(text):
     if match:
         return match.group(2)  # Return the captured date
     return "unknown"
+print("text :", text_extractor.extract_text("../../sample_pdfs/03_facture_plomberie_scan.pdf"))

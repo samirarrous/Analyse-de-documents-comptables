@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  quality-and-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install Linting tools
+      run: |
+        pip install ruff
+
+    - name: Run Ruff Check (Linting)
+      run: ruff check .
+
+    - name: Build Docker Image
+      run: |
+        docker build -t analyse-compta:${{ github.sha }} .
+
+    - name: Test Docker Run
+      run: |
+        docker run --rm analyse-compta:${{ github.sha }}
