@@ -54,16 +54,20 @@ def extract_from_table(text, tables):
 
         if match_actif_present:
             total_actif_present = match_actif_present.group(1).strip().replace("e", "€")
-        else: total_actif_present = "unknown"
+        else:
+            total_actif_present = "unknown"
         if match_actif_prec:
             total_actif_prec = match_actif_prec.group(1).strip().replace("e", "€")
-        else: total_actif_prec = "unknown"
+        else:
+            total_actif_prec = "unknown"
         if match_passif_present:
             total_passif_present = match_passif_present.group(1).strip().replace("e", "€")
-        else: total_passif_present = "unknown"
+        else: 
+            total_passif_present = "unknown"
         if match_passif_prec:
             total_passif_prec = match_passif_prec.group(1).strip().replace("e", "€")
-        else: total_passif_prec = "unknown"
+        else:
+            total_passif_prec = "unknown"
 
     return {
         "total_actif": {
