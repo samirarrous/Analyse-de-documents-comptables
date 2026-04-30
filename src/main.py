@@ -1,4 +1,3 @@
-from text_extractor import extract_text, extract_tables
 from pipeline.router import route_document
 from pipeline.exporter import export_to_json
 

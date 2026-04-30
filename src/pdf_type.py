@@ -1,5 +1,4 @@
 import pdfplumber
-from enum import Enum
 
 
 
