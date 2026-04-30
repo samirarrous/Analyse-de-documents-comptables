@@ -1,10 +1,7 @@
 import pdfplumber
 from enum import Enum
 
-class PDFType(Enum):
-    NATIVE = "native"
-    SCAN = "scan"
-    MIXED = "mixed"
+
 
 def define_type(file_path):
     has_text = False
@@ -19,8 +16,8 @@ def define_type(file_path):
 
     if has_text :
         if has_image:
-            return PDFType.MIXED
-        return PDFType.NATIVE
+            return "mixed"
+        return "native"
     else:
-        return PDFType.SCAN            
+        return "scan"            
         

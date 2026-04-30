@@ -4,6 +4,8 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from extractors import commun
+
 
 """ to avoid repeating the same code for each field,
 i choosed to do it in the same function to browse the table only once 
@@ -94,4 +96,21 @@ def extract_total_passif_present(text, tables):
 def extract_total_passif_prec(text, tables):
     return extract_from_table(text, tables)["total_passif"]["net_precedent"]
 
+
+def extract_bilan_fields(text, tables):
+    return {
+        "document_type": commun.extract_document_type(text),
+        "company_name": commun.extract_company_name(text),
+        "juridical_form": commun.extract_juridical_form(text),
+        "SIREN": commun.extract_SIREN(text),
+        "close_date": commun.extract_fiscal_year_end_date(text),
+        "total_actif": {
+            "net_present": extract_total_actif_present(text, tables),
+            "net_precedent": extract_total_actif_prec(text, tables)
+        },
+        "total_passif": {
+            "net_present": extract_total_passif_present(text, tables),
+            "net_precedent": extract_total_passif_prec(text, tables)
+        }
+    }
 
