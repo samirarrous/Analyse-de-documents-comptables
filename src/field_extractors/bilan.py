@@ -1,0 +1,32 @@
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from field_extractors import commun
+from readers import table_fields_extractor
+from readers import text_extractor
+
+
+def extract_bilan_fields(text, tables):
+    return {
+        "document_type": commun.extract_document_type(text),
+        "company_name": commun.extract_company_name(text),
+        "juridical_form": commun.extract_juridical_form(text),
+        "SIREN": commun.extract_SIREN(text),
+        "close_date": commun.extract_fiscal_year_end_date(text),
+        "total_actif": {
+            "net_present":   table_fields_extractor.extract_from_table(tables, text, r"total\s+actif",  3),
+            "net_precedent": table_fields_extractor.extract_from_table(tables, text, r"total\s+actif",  4),
+        },
+        "total_passif": {
+            "net_present":   table_fields_extractor.extract_from_table(tables, text, r"total\s+passif", 3),
+            "net_precedent": table_fields_extractor.extract_from_table(tables, text, r"total\s+passif", 4),
+        }
+    }
+file = "../../sample_pdfs/06_bilan_delices_scan.pdf"
+text = text_extractor.extract_text(file)
+tables = text_extractor.extract_tables(file)
+fields = extract_bilan_fields(text, tables)
+print (text)
+print(fields)

@@ -1,7 +1,7 @@
-from extractors.bilan import extract_bilan_fields
-import extractors.commun as commun
-import pdf_type
-import text_extractor
+from field_extractors.bilan import extract_bilan_fields
+import field_extractors.commun as commun
+import readers.pdf_type as pdf_type
+import readers.text_extractor as text_extractor
 
 def route_document(file):
     file_type = pdf_type.define_type(file)
