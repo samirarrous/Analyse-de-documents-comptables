@@ -19,10 +19,10 @@ def extract_text(file_path):
 
     return text
 
-def extract_tables(file_path):  # direct extraction of tables if possible (native or mixed) 
+def extract_tables(file_path): # direct extraction of tables if possible (native or mixed) 
     with pdfplumber.open(file_path) as pdf:
         tables = []
         for page in pdf.pages:
             tables.extend(page.extract_tables())
         return tables
-    
+
