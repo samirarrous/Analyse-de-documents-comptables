@@ -5,7 +5,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from field_extractors import commun
 from readers import table_fields_extractor
-from readers import text_extractor
 
 
 def extract_bilan_fields(text, tables):
@@ -24,9 +23,3 @@ def extract_bilan_fields(text, tables):
             "net_precedent": table_fields_extractor.extract_from_table(tables, text, r"total\s+passif", 4),
         }
     }
-file = "../../sample_pdfs/06_bilan_delices_scan.pdf"
-text = text_extractor.extract_text(file)
-tables = text_extractor.extract_tables(file)
-fields = extract_bilan_fields(text, tables)
-print (text)
-print(fields)
