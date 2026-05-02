@@ -25,10 +25,12 @@ def extract_date(text):
         return match.group()
     return "unknown"
 
-""" the company name is often before the jurridical form, but not always,
+""" the company name is often before the juridical form, but not always,
  so i noticed that it's either the document type or the company name that is on the first line,
+
  so i decided to check if the first line contains the document type, 
  if it does, then we will search for the company name in the rest of the text,
+ 
  otherwise we will consider that the first line as the company name, 
 """
 
@@ -63,6 +65,13 @@ def extract_fiscal_year_end_date(text):
     
     pattern2 = r"exercice\s+clos\s+le\s+(?::\s*)?(\d{2}\s*[/-]\s*\d{2}\s*[/-]\s*\d{4})"
     match = re.search(pattern2, text, re.IGNORECASE)
+    if match:
+        return match.group(1)
+    return "unknown"
+
+def extract_fiscal_year(text):
+    pattern = r"exercice(?:\s+clos\s+le)?\s*(?::\s*)?(?:\d{2}\s*[/-]\s*\d{2}\s*[/-]\s*)?(\d{4})"
+    match = re.search(pattern, text, re.IGNORECASE)
     if match:
         return match.group(1)
     return "unknown"
