@@ -1,4 +1,12 @@
-from field_extractors.bilan import extract_bilan_fields
+import os
+import sys
+
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from field_extractors import bilan
+from field_extractors import compte_resultat
+from field_extractors import facture
+from field_extractors import liasse_fiscale
 import field_extractors.commun as commun
 import readers.pdf_type as pdf_type
 import readers.text_extractor as text_extractor
@@ -10,8 +18,14 @@ def route_document(file):
     doc_type = commun.extract_document_type(text)
 
     fields = {}
-    fields["pdf_type"] = file_type
-    if doc_type == "bilan":
-        fields = extract_bilan_fields(text, tables)
     
+    if doc_type == "bilan":
+        fields = bilan.extract_bilan_fields(text, tables)
+    if doc_type == "compte_resultat":
+        fields = compte_resultat.extract_compte_resultat_fields(text, tables)
+    if doc_type == "facture":
+        fields = facture.extract_facture_fields(text)
+    if doc_type == "liasse_fiscale":
+        fields = liasse_fiscale.extract_liasse_fiscale_fields(text, tables)
+    fields["pdf_type"] = file_type
     return  fields

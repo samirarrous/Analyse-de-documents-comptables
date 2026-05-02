@@ -1,4 +1,6 @@
+fastapi
+uvicorn
 pdfplumber
-pdf2image
 pytesseract
+pdf2image
 pillow

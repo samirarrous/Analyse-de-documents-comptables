@@ -5,17 +5,15 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def extract_document_type(text):
-    # different pattern for each type
-    patterns = [
-        r"compte\s+de\s+résultat",
-        r"bilan",
-        r"facture",
-        r"liasse\s+fiscale",
-    ]
-    for pattern in patterns:
-        match = re.search(pattern, text, re.IGNORECASE)
-        if match:
-            return match.group().lower()  
+    patterns = {
+        "liasse_fiscale":  r"\bliasse\b",
+        "compte_resultat": r"compte\s+de\s+r[eé]sultat",
+        "bilan":           r"\bbilan\b",
+        "facture":         r"\bfacture\b",
+    }
+    for doc_type, pattern in patterns.items():
+        if re.search(pattern, text, re.IGNORECASE):
+            return doc_type
     return "unknown"
 
 def extract_date(text):
@@ -25,29 +23,29 @@ def extract_date(text):
         return match.group()
     return "unknown"
 
-""" the company name is often before the juridical form, but not always,
- so i noticed that it's either the document type or the company name that is on the first line,
+""" the company name is often before the juridical form, but not always, 
+so i noticed that it's either the document type or the company name that is on the first line,
 
- so i decided to check if the first line contains the document type, 
- if it does, then we will search for the company name in the rest of the text,
- 
- otherwise we will consider that the first line as the company name, 
-"""
+so i decided to check if the first line contains the document type,
+if it does, then we will search for the company name in the rest of the text,
+ otherwise we will consider that the first line as the company name
+ """
 
 def extract_company_name(text):
     pattern = r"(?:DE\s*:\s*)?([A-ZÀ-ÿ0-9\s'&-]+?)\s+(?:EURL|SARL|SAS|SA|SCI|EI)"
-    lines = text.split("\n")[:1] 
-    if  lines:
-        first_line = lines[0]
-        if extract_document_type(first_line) == "unknown":
-            match = re.search(pattern, first_line, re.IGNORECASE)
+    lines = text.split("\n")
+    first_line = lines[0].strip()
+
+    if extract_document_type(first_line) != "unknown":
+        for line in lines[1:]:
+            match = re.search(pattern, line, re.IGNORECASE)
             if match:
                 return match.group(1).strip()
-            else:
-                return first_line.strip()
-    match = re.search(pattern, text, re.IGNORECASE)
-    if match:
-        return match.group(1).strip()
+    else:
+        match = re.search(pattern, first_line, re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+        return first_line
     return "unknown"
 
 def extract_juridical_form(text):

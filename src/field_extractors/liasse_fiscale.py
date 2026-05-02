@@ -5,9 +5,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from field_extractors import commun
 from readers import table_fields_extractor
+from readers import text_extractor
 
 
-def extract_bilan_fields(text, tables):
+
+def extract_liasse_fiscale_fields(text, tables):
 
     close_year = commun.extract_fiscal_year(text)
     total_actif_patterns = {r"total\s+actif"}
@@ -27,3 +29,10 @@ def extract_bilan_fields(text, tables):
             "net_present":   table_fields_extractor.extract_from_table(tables, text, total_passif_patterns, net_present_patterns, 3),
         }
     }
+
+file = "../../sample_pdfs/04_facture_atelier_mixte.pdf"
+text = text_extractor.extract_text(file)
+tables = text_extractor.extract_tables(file)
+fields = extract_liasse_fiscale_fields(text, tables)
+print(text)
+print(fields)

@@ -17,7 +17,7 @@ def extract_facture_number(text):
                              # [A-Z]* optional letters
     match = re.search(pattern, text, re.IGNORECASE)
     if match:
-        return match.group(1).upper  
+        return match.group(1).upper()
     return "unknown"
     
 def extract_limit_date(text):

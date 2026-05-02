@@ -28,10 +28,11 @@ def extract_from_table(tables, text,  row_patterns, col_patterns, col_index):
                                     if re.search(col_pattern, str(table[0][colon]), re.IGNORECASE):
                                         return row[colon].strip()
     
-    amount = r"[\d][\d\s,.]*[€e]"       
-    separator = r".*?"    
-    text_pattern = rf"{row_pattern}{separator}(?:{separator}{amount}){{{col_index-1}}}{separator}([\d\s,.-]+{amount})"
-    match = re.search(text_pattern, text, re.IGNORECASE)
-    if match:
-        return match.group(1).strip().replace("e", "€")
+    amount = r"[\d][\d\s,.]*[€e]"
+    separator = r".*?"
+    for row_pattern in row_patterns:
+        text_pattern = rf"{row_pattern}{separator}(?:{amount}{separator}){{{col_index-1}}}({amount})"
+        match = re.search(text_pattern, text, re.IGNORECASE | re.DOTALL)
+        if match:
+            return match.group(1).strip().replace("e","€")
     return "unknown"

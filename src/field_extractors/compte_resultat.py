@@ -5,7 +5,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from field_extractors import commun
 from readers import table_fields_extractor
-from readers import text_extractor
 
 def extract_compte_resultat_fields(text, tables):
     # defining patterns for the fields we want to extract
@@ -48,11 +47,3 @@ def extract_compte_resultat_fields(text, tables):
             }
         }
     }
-
-file = "../../sample_pdfs/07_compte_resultat_technovation_native.pdf"
-text = text_extractor.extract_text(file)
-tables = text_extractor.extract_tables(file)
-fields = extract_compte_resultat_fields(text, tables)
-print(text)
-print(tables)
-print(fields)
