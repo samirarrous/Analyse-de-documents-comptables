@@ -88,3 +88,16 @@ def extract_address(text):
         return match.group().strip()
     return "unknown"
 
+"""function that extracts the amount 
+example : resultat totale  56 300.00 
+takes the pattern of "resultat totale" as argument and returns the amount
+"""
+
+def extract_amount(text, patterns):
+    amount_pattern = r"[\s:.-]*([\d][\d\s]*(?:[.,]\d+)?)\s*"
+    for pattern in patterns:
+        pattern = rf"{pattern}{amount_pattern}"
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            return match.group(1).strip()+"€"
+    return "unknown"

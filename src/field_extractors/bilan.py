@@ -7,7 +7,7 @@ from field_extractors import commun
 from readers import table_fields_extractor
 
 
-def extract_bilan_fields(text, tables):
+def extract_fields(text, tables):
     
     close_year = commun.extract_fiscal_year(text)
     total_actif_patterns = {r"total\s+actif"}

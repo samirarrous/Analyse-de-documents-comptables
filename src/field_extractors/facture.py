@@ -7,8 +7,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from field_extractors import commun
 
 
-amount_pattern = r"[\s:.-]*([\d][\d\s]*(?:[.,]\d+)?)\s*"
-
 def extract_facture_number(text):
     pattern = r"n\s*°?\s*:?\s*((?:[A-Z]+\s*[-/]\s*)?\d{4}\s*[-/]\s*\d{3,4})"# example: N° ABC-2024-001
                              # optional ° or : after N   
@@ -42,37 +40,34 @@ def extract_tva_number(text):
     return "unknown"
 
 def extract_total_ht(text):
-    pattern = rf"total\s+ht{amount_pattern}"
-    match = re.search(pattern, text, re.IGNORECASE)
-    if match:
-        return match.group(1).strip()+"€"
-    return "unknown"
+    patterns = [r"total\s+ht"]
+    return commun.extract_amount(text, patterns)
+
 
 def extract_total_ttc(text):
-    pattern = rf"ttc{amount_pattern}"
-    match = re.search(pattern, text, re.IGNORECASE)
-    if match:
-        return match.group(1).strip()+"€"
-    return "unknown"
+    patterns = [r"total\s+ttc", r"\bttc\b"]
+    return commun.extract_amount(text, patterns)
 
 
 def extract_tva_percentage_and_amount(text):
     result = {}
+
     percentage_pattern = r"tva.*?(\d{1,2}(?:[.,]\d{1,2})?)\s*%"
-    tva_amount_pattern = rf"{percentage_pattern}{amount_pattern}"
+    tva_amount_pattern = r"tva.*?\d{1,2}(?:[.,]\d{1,2})?\s*%"
     match = re.search(percentage_pattern, text, re.IGNORECASE)
-    if match:
+     
+    if match :
         result["percentage"] = match.group(1).strip() + "%"
-    else:
+    else :
         result["percentage"] = "unknown"
-    match = re.search(tva_amount_pattern, text, re.IGNORECASE)
-    if match:
-        result["amount"] = match.group(2).strip() + "€"
-    else:
-        result["amount"] = "unknown"
+
+    amount = commun.extract_amount(text, [tva_amount_pattern])
+    result["amount"] = amount
+
     return result
 
-def extract_facture_fields(text):
+
+def extract_fields(text):
      return {
         "document_type": commun.extract_document_type(text),
         "company_name": commun.extract_company_name(text),
