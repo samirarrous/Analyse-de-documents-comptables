@@ -2,12 +2,10 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - '**'
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - '**'
-      
+    branches: [ "main" ]
+
 jobs:
   quality-and-docker:
     runs-on: ubuntu-latest
