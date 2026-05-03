@@ -31,19 +31,17 @@ jobs:
         docker build -t analyse-compta:${{ github.sha }} .
 
     - name: Test API
-  run: |
-    docker run -d -p 8000:8000 --name test_api analyse-compta:${{ github.sha }}
+      run: |
+        docker run -d -p 8000:8000 --name test_api analyse-compta:${{ github.sha }}
 
-    # attendre que l'API soit prête (max 30s)
-    for i in {1..30}; do
-      if curl -s http://localhost:8000/docs > /dev/null; then
-        echo "API is up"
-        break
-      fi
-      sleep 1
-    done
+        for i in {1..30}; do
+          if curl -s http://localhost:8000/docs > /dev/null; then
+            echo "API is up"
+            break
+          fi
+          sleep 1
+        done
 
-    # test final
-    curl -f http://localhost:8000/docs
+        curl -f http://localhost:8000/docs
 
-    docker stop test_api
+        docker stop test_api
