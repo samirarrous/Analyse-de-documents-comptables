@@ -8,7 +8,7 @@ app = FastAPI()
 @app.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
     if not file.filename.endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Le fichier doit être un PDF")
+        raise HTTPException(status_code=400, detail="File must be a pdf")
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
         tmp.write(await file.read())
