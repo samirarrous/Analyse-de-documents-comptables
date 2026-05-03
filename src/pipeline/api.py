@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import tempfile
 import os
-import router
+from . import router
 
 app = FastAPI()
 

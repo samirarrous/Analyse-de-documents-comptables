@@ -1,1 +1,1 @@
-from src.pipeline.api import app
+from pipeline.api import app
