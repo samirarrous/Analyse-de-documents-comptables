@@ -17,7 +17,7 @@ async def upload_pdf(file: UploadFile = File(...)):
     try:
         result = router.route_document(tmp_path)
         final = {
-            "fichier": file.filename,
+            "file_name": file.filename,
             "pdf_type": result.pop("pdf_type", "unknown"),
             **result
         }
