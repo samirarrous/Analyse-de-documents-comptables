@@ -30,6 +30,9 @@ jobs:
       run: |
         docker build -t analyse-compta:${{ github.sha }} .
 
-    - name: Test Docker Run
+    - name: Test API
       run: |
-        docker run --rm analyse-compta:${{ github.sha }}
+        docker run -d -p 8000:8000 --name test_api analyse-compta:${{ github.sha }}
+        sleep 5
+        curl http://localhost:8000/docs
+        docker stop test_api
