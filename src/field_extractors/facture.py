@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from field_extractors import commun
 
 
-amount_pattern = r".*?([\d\s]+(?:[.,]\d+)?)"
+amount_pattern = r"[\s:.-]*([\d][\d\s]*(?:[.,]\d+)?)\s*"
 
 def extract_facture_number(text):
     pattern = r"n\s*°?\s*:?\s*((?:[A-Z]+\s*[-/]\s*)?\d{4}\s*[-/]\s*\d{3,4})"# example: N° ABC-2024-001
