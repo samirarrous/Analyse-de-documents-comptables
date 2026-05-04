@@ -18,14 +18,14 @@ def route_document(file):
     doc_type = commun.extract_document_type(text)
 
     fields = {}
-    
-    if doc_type == "bilan":
-        fields = bilan.extract_fields(text, tables)
-    if doc_type == "compte_resultat":
-        fields = compte_resultat.extract_fields(text, tables)
-    if doc_type == "facture":
-        fields = facture.extract_fields(text)
-    if doc_type == "liasse_fiscale":
-        fields = liasse_fiscale.extract_fields(text, tables)
     fields["pdf_type"] = file_type
+    fields["extracted_data"] = {}
+    if doc_type == "bilan":
+        fields["extracted_data"] = bilan.extract_fields(text, tables)
+    if doc_type == "compte_resultat":
+        fields["extracted_data"] = compte_resultat.extract_fields(text, tables)
+    if doc_type == "facture":
+        fields["extracted_data"] = facture.extract_fields(text)
+    if doc_type == "liasse_fiscale":
+        fields["extracted_data"] = liasse_fiscale.extract_fields(text, tables)
     return  fields

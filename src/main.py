@@ -10,7 +10,7 @@ from pipeline.exporter import export_to_json
 
 def run_cli(file_path):
     if not os.path.exists(file_path):
-        print("Fichier introuvable")
+        print("file not found")
         return
 
     result = router.route_document(file_path)
@@ -18,7 +18,7 @@ def run_cli(file_path):
     filename = os.path.splitext(os.path.basename(file_path))[0] + ".json"
     output_path = export_to_json(result, filename)
 
-    print(f"Résultat exporté : {output_path}")
+    print(f"result exported : {output_path}")
 
 
 def main():

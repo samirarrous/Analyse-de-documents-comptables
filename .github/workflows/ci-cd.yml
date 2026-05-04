@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "**" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "**" ]
 
 jobs:
   quality-and-docker:
@@ -29,6 +29,10 @@ jobs:
     - name: Build Docker Image
       run: |
         docker build -t analyse-compta:${{ github.sha }} .
+
+    - name: Run Pytest Tests
+      run: |
+        docker run --rm analyse-compta:${{ github.sha }} python -m pytest tests/
 
     - name: Test API
       run: |
