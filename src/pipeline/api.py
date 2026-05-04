@@ -1,3 +1,6 @@
+"""
+FastAPI application definition and endpoints for the document analyzer.
+"""
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import tempfile
 import os
@@ -7,6 +10,18 @@ app = FastAPI()
 
 @app.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
+    """
+    API endpoint to upload and process a PDF accounting document.
+
+    Args:
+        file (UploadFile): The PDF file uploaded via multipart/form-data.
+
+    Raises:
+        HTTPException: If the uploaded file is not a PDF (400 Bad Request).
+
+    Returns:
+        dict: A JSON response containing the extracted structured data and the file name.
+    """
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="File must be pdf")
 

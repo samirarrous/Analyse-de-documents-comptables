@@ -1,3 +1,6 @@
+"""
+Extractor module specific to income statement (compte de résultat) documents.
+"""
 import sys
 import os
 
@@ -7,6 +10,16 @@ from field_extractors import commun
 from readers import table_fields_extractor
 
 def extract_fields(text, tables):
+    """
+    Extracts relevant financial fields from an income statement document.
+
+    Args:
+        text (str): The raw text of the document.
+        tables (list): Parsed tables extracted from the document.
+
+    Returns:
+        dict: A dictionary containing extracted income statement data.
+    """
     # defining patterns for the fields we want to extract
 
     close_year = commun.extract_fiscal_year(text)

@@ -81,6 +81,9 @@ target/
 # Generated output files
 output/
 
+# Auto-generated documentation
+docs/
+
 # IPython
 profile_default/
 ipython_config.py

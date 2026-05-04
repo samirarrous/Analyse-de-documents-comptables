@@ -1,3 +1,6 @@
+"""
+Extractor module specific to balance sheet (bilan) documents.
+"""
 import sys
 import os
 
@@ -8,6 +11,16 @@ from readers import table_fields_extractor
 
 
 def extract_fields(text, tables):
+    """
+    Extracts relevant financial fields from a balance sheet document.
+
+    Args:
+        text (str): The raw text of the document.
+        tables (list): Parsed tables extracted from the document.
+
+    Returns:
+        dict: A dictionary containing extracted balance sheet data (e.g., assets, liabilities).
+    """
     
     close_year = commun.extract_fiscal_year(text)
     total_actif_patterns = {r"total\s+actif"}

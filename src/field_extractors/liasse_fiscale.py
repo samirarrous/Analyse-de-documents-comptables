@@ -1,3 +1,6 @@
+"""
+Extractor module specific to tax return (liasse fiscale) documents.
+"""
 import sys
 import os
 
@@ -7,16 +10,43 @@ from field_extractors import commun
 from readers import table_fields_extractor
 
 def extract_result_before_taxes(text):
+    """
+    Extracts the result before taxes (résultat avant impôts).
+
+    Args:
+        text (str): The raw text of the document.
+
+    Returns:
+        str: The extracted amount, or 'unknown'.
+    """
     patterns = [r"avant\s+imp[oôéèe]t"]
     return commun.extract_amount(text, patterns)
 
 
 def extract_result_after_taxes(text):
+    """
+    Extracts the result after taxes (résultat après impôts).
+
+    Args:
+        text (str): The raw text of the document.
+
+    Returns:
+        str: The extracted amount, or 'unknown'.
+    """
     patterns = [r"apr[eéè]s\s+imp[oôé]t"]
     return commun.extract_amount(text, patterns)
 
 
 def extract_fiscal_result(text):
+    """
+    Extracts the fiscal result (résultat fiscal).
+
+    Args:
+        text (str): The raw text of the document.
+
+    Returns:
+        str: The extracted amount, or 'unknown'.
+    """
     patterns = [
         r"r[ée]sultat\s+fiscal",
     ]
@@ -24,6 +54,15 @@ def extract_fiscal_result(text):
 
 
 def extract_corporate_tax(text):
+    """
+    Extracts the corporate tax amount (impôt sur les sociétés).
+
+    Args:
+        text (str): The raw text of the document.
+
+    Returns:
+        str: The extracted amount, or 'unknown'.
+    """
     patterns = [
         r"les\s+soci[eé]t[eé]s",
         r"les\s+soci[eé]t[eé]s\s+\(?\d{1,2}\s*%\)?",
@@ -32,6 +71,16 @@ def extract_corporate_tax(text):
     return commun.extract_amount(text, patterns)
 
 def extract_fields(text, tables):
+    """
+    Extracts relevant financial fields from a tax return document.
+
+    Args:
+        text (str): The raw text of the document.
+        tables (list): Parsed tables extracted from the document.
+
+    Returns:
+        dict: A dictionary containing extracted tax return data.
+    """
 
     close_year = commun.extract_fiscal_year(text)
     total_actif_patterns = {r"total\s+actif"}

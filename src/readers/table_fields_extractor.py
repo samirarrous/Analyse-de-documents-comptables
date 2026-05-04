@@ -1,3 +1,6 @@
+"""
+Module for extracting specific fields from parsed PDF tables or text.
+"""
 import re
 import sys
 import os
@@ -14,6 +17,21 @@ using the symbol € to reconize a value
 """
 
 def extract_from_table(tables, text,  row_patterns, col_patterns, col_index):
+    """
+    Extracts a value from a table based on row and column regex patterns.
+    If no tables are found, attempts to extract the value directly from the text
+    using a fallback regex strategy based on the column index.
+
+    Args:
+        tables (list): A list of parsed tables from the PDF.
+        text (str): The full raw text of the document.
+        row_patterns (list of str): Regex patterns to match the target row.
+        col_patterns (list of str): Regex patterns to match the target column header.
+        col_index (int): The 1-based index of the target column (used for the text fallback).
+
+    Returns:
+        str: The extracted value, or 'unknown' if not found.
+    """
     if tables:
         for table in tables:
             for row in table:

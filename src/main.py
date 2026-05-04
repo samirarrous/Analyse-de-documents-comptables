@@ -1,3 +1,7 @@
+"""
+Main entry point for the Accounting Document Analyzer application.
+Provides both a Command Line Interface (CLI) and a FastAPI web server.
+"""
 import sys
 import os
 
@@ -9,6 +13,15 @@ from pipeline.exporter import export_to_json
 
 
 def run_cli(file_path):
+    """
+    Executes the document analysis pipeline from the command line.
+
+    Args:
+        file_path (str): The path to the PDF document to be analyzed.
+
+    Returns:
+        None: The output is exported directly to a JSON file.
+    """
     if not os.path.exists(file_path):
         print("file not found")
         return
@@ -22,6 +35,11 @@ def run_cli(file_path):
 
 
 def main():
+    """
+    Main execution function.
+    If a file path is provided as a command-line argument, runs the CLI.
+    Otherwise, starts the FastAPI web server on port 8000.
+    """
     if len(sys.argv) > 1:
         run_cli(sys.argv[1])
     else:

@@ -169,6 +169,20 @@ You can run the test suite using the following command:
 python -m pytest tests/
 ```
 
+## 📚 Documentation
+
+The project includes automatically generated technical documentation using `pdoc`.
+
+To view the documentation interactively in your browser, run:
+```bash
+pdoc src/
+```
+
+To export the documentation as static HTML files in a `docs/` directory:
+```bash
+pdoc -o docs/ src/
+```
+
 ## 📁 Project Structure
 
 *   `src/main.py`: Main entry point (Launches the API or the CLI).
