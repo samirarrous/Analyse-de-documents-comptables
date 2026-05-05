@@ -112,7 +112,14 @@ python src/main.py
 The API will be available at `http://localhost:8000`. 
 
 **Interactive Documentation (Swagger UI):**
-Once the API is running, go to `http://localhost:8000/docs` to directly test the endpoints from your browser visually and interactively.
+Once the API is running, go to `http://localhost:8000/` to directly test the endpoints from your browser visually and interactively.
+
+**How to test the API directly from your browser:**
+1. Click on the green **POST /upload** row to expand it.
+2. Click the **Try it out** button on the right.
+3. Click on **Choose File** and select a PDF document from your computer.
+4. Click the large blue **Execute** button.
+5. Scroll down to see the extracted JSON data in the **Server response** section!
 
 **Usage example with cURL:**
 ```bash

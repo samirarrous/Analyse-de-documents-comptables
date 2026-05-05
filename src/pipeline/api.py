@@ -2,18 +2,12 @@
 FastAPI application definition and endpoints for the document analyzer.
 """
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from fastapi.responses import RedirectResponse
 import tempfile
 import os
 from . import router
 
-app = FastAPI()
-
-@app.get("/")
-def root():
-    """Redirects the root URL to the interactive API documentation."""
-    return RedirectResponse(url="/docs")
-
+app = FastAPI(docs_url="/")
+    
 @app.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
     """
