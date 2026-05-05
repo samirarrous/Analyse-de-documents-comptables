@@ -4,8 +4,10 @@ Module for extracting specific fields from parsed PDF tables or text.
 import re
 import sys
 import os
+import pdfplumber
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 """
 instead of making a function for each field, 
 i chose to make a single function that takes the patterns for the row and the column as arguments,
@@ -15,6 +17,22 @@ than touse colomn_index as argument, it's a (roue de secours) in case there are 
 using the symbol € to reconize a value 
 
 """
+def extract_tables(file_path): # direct extraction of tables if possible (native or mixed) 
+    """
+    Extracts all structural tables from a PDF using pdfplumber.
+
+    Args:
+        file_path (str): The path to the PDF file.
+
+    Returns:
+        list: A list of tables, where each table is a list of rows, and each row is a list of cells.
+    """
+    with pdfplumber.open(file_path) as pdf:
+        tables = []
+        for page in pdf.pages:
+            tables.extend(page.extract_tables())
+        return tables
+
 
 def extract_from_table(tables, text,  row_patterns, col_patterns, col_index):
     """

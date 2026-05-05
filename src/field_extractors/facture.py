@@ -1,13 +1,10 @@
 """
 Extractor module specific to invoice (facture) documents.
 """
-import sys
-import os
 import re
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from field_extractors import commun
+from src.field_extractors import commun
 
 
 def extract_facture_number(text):

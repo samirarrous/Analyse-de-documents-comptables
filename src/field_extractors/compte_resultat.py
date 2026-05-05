@@ -1,13 +1,9 @@
 """
 Extractor module specific to income statement (compte de résultat) documents.
 """
-import sys
-import os
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from field_extractors import commun
-from readers import table_fields_extractor
+from src.field_extractors import commun
+from src.readers import table_fields_extractor
 
 def extract_fields(text, tables):
     """

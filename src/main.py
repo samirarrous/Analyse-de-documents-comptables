@@ -5,11 +5,11 @@ Provides both a Command Line Interface (CLI) and a FastAPI web server.
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pipeline.api import app # noqa: F401
-from pipeline import router
-from pipeline.exporter import export_to_json
+from src.pipeline.api import app # noqa: F401
+from src.pipeline import router
+from src.pipeline.exporter import export_to_json
 
 
 def run_cli(file_path):
@@ -27,9 +27,15 @@ def run_cli(file_path):
         return
 
     result = router.route_document(file_path)
+    # tried to add filename in beginning as requested, but it gave a wrong filename
+    base_name = os.path.basename(file_path)
+    final_result = {
+        "file_name": base_name, #putting filename in the beginning
+        **result
+    }
 
-    filename = os.path.splitext(os.path.basename(file_path))[0] + ".json"
-    output_path = export_to_json(result, filename)
+    json_filename = os.path.splitext(base_name)[0] + ".json"
+    output_path = export_to_json(final_result, json_filename)
 
     print(f"result exported : {output_path}")
 
@@ -44,7 +50,7 @@ def main():
         run_cli(sys.argv[1])
     else:
         import uvicorn
-        uvicorn.run("main:app", host="0.0.0.0", port=8000)
+        uvicorn.run("src.main:app", host="0.0.0.0", port=8000)
 
 
 if __name__ == "__main__":

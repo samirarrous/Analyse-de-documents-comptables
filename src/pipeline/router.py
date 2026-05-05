@@ -6,14 +6,15 @@ import os
 import sys
 
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from field_extractors import bilan
-from field_extractors import compte_resultat
-from field_extractors import facture
-from field_extractors import liasse_fiscale
-import field_extractors.commun as commun
-import readers.pdf_type as pdf_type
-import readers.text_extractor as text_extractor
+from src.field_extractors import bilan
+from src.field_extractors import compte_resultat
+from src.field_extractors import facture
+from src.field_extractors import liasse_fiscale
+import src.field_extractors.commun as commun
+from src.readers import pdf_type
+from src.readers import text_extractor
+from src.readers import table_fields_extractor as table
+
 
 def route_document(file):
     """
@@ -31,7 +32,7 @@ def route_document(file):
     """
     file_type = pdf_type.define_type(file)
     text = text_extractor.extract_text(file)
-    tables = text_extractor.extract_tables(file)
+    tables = table.extract_tables(file)
     doc_type = commun.extract_document_type(text)
 
     fields = {}

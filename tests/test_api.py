@@ -42,6 +42,7 @@ def test_upload_valid_pdf(monkeypatch):
     
     # verifying the json
     data = response.json()
+    assert data["file_name"] == "test.pdf"
     assert data["pdf_type"] == "mixed" 
     assert data["extracted_data"]["document_type"] == "facture"
     assert data["extracted_data"]["company_name"] == "Formalis"

@@ -22,31 +22,14 @@ def extract_text(file_path):
     text = ""
 
     with pdfplumber.open(file_path) as pdf:
-        images = pdf2image.convert_from_path(file_path)
-
-        for i in range(len(pdf.pages)): 
-            page_text = pdf.pages[i].extract_text() # using index to insure the order of text and images
+        for i in range(len(pdf.pages)):
+            page = pdf.pages[i]
+            page_text = page.extract_text()
             if page_text:
                 text += page_text + "\n"
-
-            if pdf.pages[i].images:
-                text += pytesseract.image_to_string(images[i]) + "\n"
-
+            # convert the scanned page to image and extract text from it
+            elif page.images:
+                image = pdf2image.convert_from_path(file_path, first_page=i+1, last_page=i+1)[0]
+                text += pytesseract.image_to_string(image) + "\n"
     return text
-
-def extract_tables(file_path): # direct extraction of tables if possible (native or mixed) 
-    """
-    Extracts all structural tables from a PDF using pdfplumber.
-
-    Args:
-        file_path (str): The path to the PDF file.
-
-    Returns:
-        list: A list of tables, where each table is a list of rows, and each row is a list of cells.
-    """
-    with pdfplumber.open(file_path) as pdf:
-        tables = []
-        for page in pdf.pages:
-            tables.extend(page.extract_tables())
-        return tables
 

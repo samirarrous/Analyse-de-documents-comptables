@@ -2,10 +2,6 @@
 Common extraction logic and regular expressions shared across different document types.
 """
 import re
-import sys
-import os
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def extract_document_type(text):
     """
