@@ -39,13 +39,13 @@ jobs:
         docker run -d -p 8000:8000 --name test_api analyse-compta:${{ github.sha }}
 
         for i in {1..30}; do
-          if curl -s http://localhost:8000/docs > /dev/null; then
+          if curl -s http://localhost:8000/ > /dev/null; then
             echo "API is up"
             break
           fi
           sleep 1
         done
 
-        curl -f http://localhost:8000/docs
+        curl -f http://localhost:8000/
 
         docker stop test_api
