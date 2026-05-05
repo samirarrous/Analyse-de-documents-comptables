@@ -2,8 +2,6 @@
 Main routing logic that orchestrates document extraction.
 Determines document type and applies the appropriate field extractor.
 """
-import os
-import sys
 
 
 from src.field_extractors import bilan
